@@ -1,0 +1,479 @@
+PROCEEDINGS OF ICETECT 2011
+ILLUMINATION INVARIANT FACE RECOGNITION USING DISCRETE
+COSINE TRANSFORM AND PRINCIPAL COMPONENT ANALYSIS
+Shermina.J
+The Department of Computing,
+Muscat College, University of Stirling, UK
+Shermina@mctcollege.com
+ABSTRACT:-Face recognition technology has evolved
+as a popular identification technique to perform
+verification of human identity. By using the feature
+extraction methods and dimensionality reduction
+techniques in the pattern recognition applications, a
+number of facial recognition systems has been produced
+with distinct measure of success. Various face
+recognition algorithms and their extensions, have been
+proposed in the past three decades. However, face
+recognition faces challenging problems in real life
+applications because of the variation in the illumination
+of the face images. In the recent years, the research is
+focused towards Illumination-invariant face recognition
+system and many approaches have been proposed. But,
+there are several issues in face recognition across
+illumination variation which still remains unsolved. This
+paper provides a research on an efficient illumination-
+invariant face recognition system using Discrete Cosine
+Transform (DCT) and Principal Component Analysis
+(PCA). For processing the illumination invariant image,
+low frequency components of DCT are used to normalize
+the illuminated image, odd and even components of DCT
+is used for compensation in illumination variation and
+PCA is used for recognition of face images. The existing
+approaches in illumination Invariant face recognition are
+comprehensively reviewed and discussed. The proposed
+approach is validated with Yale Face Database B.
+Experimental results demonstrate the effectiveness of this
+approach in the performance of face recognition.
+Keywords:
+Image Processing, Object Recognition, Face Recognition,
+Illumination variation; Discrete Cosine Transform
+(DCT); Principal Component Analysis(PCA).
+1.INTRODUCTION
+Biometrics is an automated method of recognizing a
+person based on their physical or behavioral
+characteristics. Various types of recognition are available
+commercially nowadays[1]. Face recognition is the
+biometric identification of a human’s face and matching
+the image against a library of known faces. It has become
+the important area of research in computer vision and one
+of the most successful applications of image analysis and
+processing. Recently, the importance of face recognition
+has been increasingly emphasized in the security since
+978-1-4244-7926-9/11/$26.00 ©2011 IEEE
+most of the popular areas are covered under CCD
+cameras in various applications. However, the facial
+images captured in uncontrolled and unconstrained
+environments still faces a drop in the recognition
+performance with the existing face recognition
+techniques. The reason for the drop in the recognition
+performance is because of the appearance variations of
+the face image induced by various environmental factors,
+among which illumination is one of the most important
+factor. Changes in the illumination condition cause
+dramatic variation in face appearance and seriously affect
+the performance of face recognition systems. Hence, the
+effect of illumination variation is one of the challenging
+problems in a practical face recognition system. During
+the last several years, research on face recognition has
+been focused on reducing the impact of changes in
+lighting conditions, facial expression and poses[2].
+Illumination invariant face recognition algorithms need to
+deal with the prominent amount of variation in
+illumination between gallery and probe images.. Existing
+approaches on the problem of illumination variation can
+be divided into two main categories, active and passive
+approaches. In the passive approaches, the illumination
+variation problem is overcome by studying the visible
+spectrum images which have been altered by illumination
+variations. In the active approaches, the problem of
+illumination variation is overcome by employing active
+imaging techniques to obtain face images captured under
+consistent illumination condition. Passive approaches can
+further be divided into two groups. The first group
+attempt to model the behavior of the face appearance as a
+function of illumination. In the other group, the goal is to
+remove the influence of illumination changes from face
+images or to extract face features that are invariant to
+illumination[3]. In this paper, a method for face
+recognition on varying lighting conditions using low
+frequency components of Discrete Cosine Transform and
+Principal Component Analysis is proposed. The
+organization of the paper is as follows: a review of
+related literature is presented in Section 2. A concise
+description about the methodology of proposed research
+is presented in section 3. The experimental results and
+analysis is presented in section 4 and finally the paper is
+concluded in Section 5.
+2. RELAVENT PREVIOUS WORKS
+826Illumination-invariant face recognition is a very active
+area of research and a number of illumination invariant
+face recognition approaches have been proposed in the
+recent years to cope up with illumination variations. All
+the approaches towards illumination problem can be
+broadly categorized as: transformation of images with
+variable illumination to a canonical representation,
+extracting illumination invariant features, modeling of
+illumination variation and utilization of some 3-d face
+models whose facial shapes and albedos are obtained in
+advance [2].
+The face images modeling in various illumination
+condition is based on statistical or physical model.
+Statistical analysis techniques, such as Principal
+Component Analysis and Linear Discriminant Analysis,
+are applied to the training set containing faces of different
+illuminations to achieve a subspace that covers the
+variation of possible illumination. In physical modelling,
+the model of the image formation process is generated
+based on the assumption of certain object surface
+reflectance properties, like Lambertian reflectance[4].
+Adini et al. [5] presented a study on Illumination
+Invariant Features which evaluates the sensitivity of
+illumination insensitive image representations to changes
+in illumination. The representations include edge map,
+image intensity derivatives, and the image convolved
+with a 2D Gabor-like filter. These representations were
+also followed by a log function to generate additional
+representations. The experimentation proved that these
+representations are not sufficient to overcome the image
+variation arises due to the change of illumination
+direction.
+Histogram Equalisation [7] is the commonly used
+approach for Photometric Normalization. In this, the
+histogram of the pixel intensities in the resulting image is
+flat. In Homomorphic filtering approach, the logarithm of
+the equation of the reflectance model is taken to separate
+the reflectance and luminance. Based on the assumption
+that the illumination varies slowly across different
+locations of the image and the local reflectance changes
+quickly across different locations, a high-pass filtering
+can be performed on the logarithm of the image to reduce
+the luminance part, which is the low frequency
+component of the image, and amplify the reflectance part,
+which corresponds to the high frequency component.
+Short et al. [9] compared five photometric normalization
+and was proved that histogram equalisation helped in
+every case. Chen et al. [10] employed DCT to
+compensate for illumination variation in the logarithm
+domain. The uneven illumination is removed in the image
+reconstructed by inverse DCT after a number of DCT
+coefficients corresponding to low frequency are
+discarded.
+Blanz and Vetter [8] proposed face recognition based on
+fitting a 3D morphable model. The 3D morphable model
+describes the shape and texture of face separately based
+on the PCA analysis of the shape and texture obtained
+from a database of 3D scans. In this, an optimization
+process is needed to optimize shape coefficients, texture
+coefficients along with parameters to minimize the
+difference of the input image and the rendered image
+based on the coefficients. The rendering parameters
+include pose angles, 3D translation, ambient light
+intensities, directed light intensities and angles, and other
+parameters of the camera and color channels. After fitting
+both the gallery images and the probe images to the
+model, the recognition can be performed based on the
+model coefficients for shape and texture. Good
+recognition performance across pose and illumination is
+achieved in experiments on CMUPIE and FERET face
+database.
+Few researches emerged on the features of the face image
+that are invariant to variation in light. This has been
+achieved by extracting only those features that are not
+affected by variations in lighting conditions. Gradient
+faces [11], 2D Gabor Filter [12], DCT coefficients [13],
+LBP Feature [14] are some of the representations of
+image. Different methods of passive approach using the
+Discrete Cosine Transform under the illumination
+condition are reviewed here.
+Abbas et al., [15 ] proposed an illumination invariant face
+recognition method in the logarithm discrete cosine
+transform domain where an existing illumination
+normalization technique in the logarithm DCT domain is
+used. The principal component analysis (PCA) algorithm
+is used for feature extraction in the DCT domain. By this,
+the inverse DCT step is skipped and the computational
+cost is reduced. Experimental results on the Yale B
+database show that we obtain the same results exactly as
+applying PCA in the spatial domain but with reduced
+computational cost.
+Heng Fui Liau et al. [16] have proposed a discrete cosine
+transform (DCT) based technique for carrying out
+illumination invariant face recognition. It has been
+performed to tackle the consequences of illumination
+variations on the performance of appearance based face
+recognition methods. In this, instead of discarding
+illumination variations, correcting the illumination
+variation has been the objective of the method. In the
+DCT domain, illumination variations that fall
+predominantly in the low frequency band have been
+normalized by their method. By controlling the properties
+of the odd and even constituents of the DCT additional
+effects of illumination variation which results in the
+creation of shadows and specular defects have been
+corrected. Their proposed method has many benefits.
+First, it has not necessitated the utilization of training
+images or an illumination model and can be employed
+straightaway to the test image. Second, the system has
+been simple. It has been easy to implement because only
+one parameter is required to be determined. Their
+proposed method has demonstrated comparable
+performance in the experimental results on Yale face
+827database B using PCA- and support vector machines
+(SVM)-based face recognition algorithms.
+Virendra P. et al. [17] proposed a Illumination Invariant
+Accurate Face Recognition with Down Scaling of DCT
+Coefficients. It utilizes the fact that discrete cosine
+transform (DCT) low-frequency coefficients correspond
+to illumination variations in a digital image. Under
+varying illuminations, the images captured may have low
+contrast; initially we apply histogram equalization on
+these for contrast stretching. Then the low-frequency
+DCT coefficients are scaled down to compensate the
+illumination variations. The classification is done using
+k−nearest neighbor classification and nearest mean
+classification on the images obtained by inverse DCT on
+the processed coefficients. The correlation coefficient and
+Euclidean distance obtained using principal component
+analysis are used as distance metrics in classification.
+4. METHODOLOGY
+The input image( I f ) is the virtual frontal face image.
+Generally the illuminated face image I f ( x , y ) can be
+considered as the product of reflectance R ( x , y ) and
+luminance L ( x , y ) as shown in eqn (1).
+I f ( x , y ) = R ( x , y ) L ( x , y )
+(1)
+Taking logarithm transform on eqn. (20), we get,
+log I f ( x , y ) = log R ( x , y ) + log L ( x , y )
+(2)
+The linear equation obtained by taking logarithm
+transform on equation (1) shows that adding the
+logarithm transformed of reflectance and the logarithm
+transform of luminance will yield the logarithm transform
+of the illuminated image as shown in (2). Logarithmic
+transform is frequently employed in the image processing
+field, to expand the values of the dark pixels. While the
+reflectance component lies mostly in the higher frequency
+band, the luminance component lies mostly in the low
+frequency band. So, the ‘low-pass version’ of the
+illuminated images can be taken as the approximate
+luminance component. The stable facial features are
+represented by the reflectance component of an
+illuminated face image under unstable lighting
+conditions.
+4.1 ILLUMINATION NORMALIZATION
+By adding a compensation term, which compensates for
+the non uniform illumination, the uniform luminance
+component can be attained from the original image. The
+following procedure is followed to compute the
+compensation term. First, from the low frequency
+components of DCT, an r × c image is rebuilt and its
+mean is computed as follows,
+1 c r
+m =
+log L ( x , y )
+(3)
+r × c x = 1 y = 1
+Then the mean is subtracted from each pixel as follows,
+∑∑
+c ( x , y ) = 0 . 5 ∗ ( m − log L ( x , y ))
+(4)
+The low frequency components of DCT, is used and the
+log L ( x , y ) is estimated. Single pixels that are dark are
+indicated by negative value points and single pixels that
+are bright are indicated by positive value points. The
+difference between the pixel value and mean value are
+halved by adjusting each pixel as shown in eqn. (4).
+4.2 ILLUMINATION CORRECTION
+The illumination variation in the face can easily be
+compensated based on the properties of odd and even
+components of DCT because of the symmetrical property
+of the human face. Here, an illumination compensation
+method based on manipulating even and odd DCT
+components is used. Initially, from the odd and even DCT
+components in the horizontal direction of the original
+images, .two new images I odd and I even are
+reconstructed. Then the pixels on the left half and the
+right half are compared with each other. If the right-side
+pixel is positive but corresponding left side pixel is
+negative then both the pixel values will be adjusted.
+While the important facial features are preserved the
+illumination variations are largely reduced.
+The
+illumination corrected image obtained using the proposed
+method, is shown in Fig. 1. Because the illumination
+variation is corrected by the proposed method on basis of
+the symmetry of the human face, the resultant output
+image appears different from the original image. The left-
+half side is made identical to the right-half side by
+suitably aligning the output image. A face is not
+accurately equal due to some slight variations in the two
+halves of every face; for instance, the two eyes may have
+small dissimilarity in sizes, only one side of the cheek
+may have a mole, etc. Hence little adverse effects may be
+present in the output images. Each image is normalized
+for a mean of 0.5.
+4.3 IMAGE RECOGITION
+The normalized images are recognized by using the
+Principal Component Analysis (PCA), after normalizing
+the illuminated image by using the low frequency
+components of DCT. Using a mathematical method,
+numerous possibly correlated variables are transformed
+into a smaller number of uncorrelated variables known as
+principal components by PCA [19][20]. Compute the
+eigen-faces from the training set by obtaining an initial
+set of R normalized images (the training set) and
+R ' Eigen faces that correspond to the highest Eigen value
+are preserved.
+5.EXPERIMENTAL
+RESULTS
+AND
+COMPARATIVE ANALYSIS
+The performance of illumination invariant face
+recognition is commonly evaluated using the Yale face
+database B. Nine different poses of 10 individuals are
+present in the Yale face database B[21]. 64 different
+illumination conditions exists for each pose. Single light
+source images of 10 subjects each seen under 576
+viewing conditions i.e., a total of 5850 images are present
+828in the database. The proposed approach is implemented in
+Matlab (7.10) and the results show that our approach has
+an encouraging performance. Accuracy in face
+recognition is computed with the false acceptance rate
+(FAR) which is percentage of incorrect acceptances and
+false rejection rate (FRR) which is the percentage of
+incorrect rejections. The genuine acceptance rate is
+computed using these factors and it determines the
+overall accuracy measurement of the approach. The
+experimental results shows that the approach of DCT
+with PCA improves the accurate recognition rate in face
+recognition. The sample output obtained from the
+Illumination invariant process is shown in Fig.1.
+Fig 1: a) images with various illumination conditions b)
+normalized images using DCT components
+The percentage of the recognition rates and the accuracy
+are given in the following table 1.
+Table 1: Recognition rates and Accuracy values on the
+FERET database
+Illumination invariant face recognition based on
+DCT and PCA
+Database
+FAR
+FRR
+Accuracy
+(%)
+(%)
+(%)
+Yale face
+5.84
+7.51
+94.2
+database B
+6.CONCLUSION
+In this paper, a methodology on illumination invariant
+face recognition using Discrete Cosine Transform (DCT)
+and Principal Component Analysis (PCA) is discussed
+through the process of normalization, compensation and
+recognition of face images. Since variation of lighting
+condition in input face image is the major problem in face
+recognition, plenty of techniques were developed for
+effective recognition under these circumstances. The
+technique DCT with PCA in Yale Database B proves
+good recognition rate. With these results, I conclude that
+the combination of DCT with any other recognition
+approaches could be experimented in order to improve
+the illumination invariant recognition accuracy. However,
+it is identified that the efficiency of the face recognition
+system could be increased by the fusion of the existing
+approaches in a system so that, the combinational results
+will outperforms the existing methods in face recognition.
+Therefore, in future work, the fusion of two illumination
+invariant face recognition approaches could be
+experimented for recognition efficiency in order to
+determine the most effective approach in face recognition
+across variations in illumination.
+REFERENCES
+[1] Zhao, W. Chellappa, R., Phillips, P. J. and Rosenfeld,
+A., “Face Recognition: A Literature Survey”, ACM
+Computing Survey, December, pp: 399-458, 2003.
+[2] Kavita. R. Singh, Mukesh. A. Zaveri and Mukesh. M.
+Raghuwanshi, “Illumination and Pose Invariant Face
+Recognition: A Technical Review”, International Journal
+of Computer Information Systems and Industrial
+Management Applications, Vol.2 (2010), pp.029-038
+[3] X. Zou, J. Kittler and K. Messer, “Illumination
+Invariant Face Recognition: A Survey”, in: Proceedings
+of 1st IEEE International Conference on Biometric:
+Theory, Application and Systems (2007), pp. 1–8.
+[4] R. Basri and D.W. Jacobs, “Lambertian reflectance
+and linear subspaces”,. IEEE Trans. Pattern Anal. Mach.
+Intell. 25 (2) (2003) pp. 218–233.
+[5]Y. Adini, Y. Moses, and S. Ullman., “Face recognition
+The problem of compensating for changes in illumination
+direction”,. IEEE Transactions on Pattern Analysis and
+Machine Intelligence, 19(7), 1997.
+[6] S. Shan, W. Gao, B. Cao and D. Zhao, “Illumination
+normalization for robust face recognition against varying
+lighting conditions”, in: Proceedings of IEEE Workshop
+on AMFG, 2003, pp. 157–164.
+[7] Dang-Hui Liu c , Kin-Man Lam and Lan-Sun Shen,
+“Illumination invariant face recognition” Pattern
+Recognition, Volume 38, Issue 10, October 2005, Pages
+1705-1716
+[8] V. Blanz and T. Vetter, “Face recognition based on
+fitting a 3d morphable model”, IEEE Trans. PAMI,
+25(9):1063–1073, September 2003.
+[9] J. Short, J. Kittler, and K. Messer. A comparison of
+photometric normalisation algorithm for face verification.
+In Proc. Int’l conf. AFGR, pages 254–259, 2004.
+[10] W. Chen, M.J. Er, and S. Wu. Illumination
+compensation and normalization for robust face
+recognition usinf discrete cosine transform in logarithm
+domain. IEEE Trans. SMC-B, 36(2):458–466, 2006.
+[11] T. Zhang, Y. Y. Tang, Z. Shang, and X. Liu, 2009,
+“Face Recognition Under Varying Illumination using
+Gradientfaces,” IEEE Transactions, vol.18, no.11,
+pp.2599 – 2606.
+[12] L. Nanni, and D. Maio, “Weighted sub-Gabor for
+face recognition,” Int. J. Pattern Recognition Letters,
+vol.28, no.4, pp. 487-492 . 2007
+[13] K. Zhou and R. Chellappa, “Illuminating Light
+Field:
+Image-based
+Face
+Recognition
+Across
+Illuminations and Poses”, Proc. FG’04, 2004.
+[14] X. Tan, and B. Triggs, 2007, “Enhanced local
+texture feature sets for face recognition under difficult
+lighting conditions,” In Proceedings of the IEEE
+international workshop on analysis and modeling of faces
+and gestures, pp. 168-182.
+[15] Abbas, A.; Khalil, M.I.; AbdelHay, S.; Fahmy,
+“Illumination invariant face recognition in logarithm
+829Discrete Cosine Transform domain” 7-10 Nov. 2009, pp
+4157 - 4160
+[16]Heng Fui Liau and Dino Isa, "New Illumination
+Compensation Method for Face Recognition",(IJCNS)
+International Journal of Computer and Network Security,
+Vol. 2, No. 3, pp.5-12, March 2010.
+[17] Virendra P. Vishwakarma, Sujata Pandey and M. N.
+Gupta, “An Illumination Invariant Accurate Face
+Recognition with Down Scaling of DCT Coefficients”
+Journal of Computing and Information Technology - CIT
+18, 2010, 1, 53–67
+[18] S. Amnon, R. Tammy, “The quotient image: class
+based re-rendering and recognition with varying
+illuminations”, IEEE Transaction on Pattern Analysis and
+Machine Intelligent, Vol.23, No.2, pp.129-139, 2001.
+[19] H. Moon, P.J. Phillips, “Computational and
+Performance aspects of PCA based Face Recognition
+Algorithms”, Perception, vol. 30, pp. 303- 321, 2001.
+[20] M. Turk and Pentland, “Face Recognition Using
+Eigenfaces”, in Proc. IEEE International Conference on
+Computer Vision and Pattern Recognition, Maui, Hawaii,
+1991.
+[21] Yale Face Database B, “http://cvc.yale.edu/
+projects/yalefacesB/yalefacesB.html”, 2001.
+AUTHORS PROFILE
+Shermina.J received the Master
+degree in Computer Science and
+Engineering in the year 2002 from
+Madurai Kamaraj University, India.
+She began to pursue the Ph.D degree
+n Kalasalingam University, India in
+2008. Currently she is working as a
+lecturer in Muscat College affiliated
+to the University of Stirling, UK. She is a member of
+IEEE and the current research interest is in the field of
+image processing.
+830

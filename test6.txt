@@ -1,0 +1,384 @@
+Face Recognition using Subspaces Techniques
+G. Prabhu Teja S. Ravi
+Department of Computer Science
+Pondicherry University
+Pondicherry, India Department of Computer Science
+Pondicherry University
+Pondicherry, India
+Prabhu_m4@yahoo.com sravicite@gmail.com
+Abstract - With many applications in various domains, Face
+Recognition technology has received a great deal of attention
+over the decades in the field of image analysis and computer
+vision. It has been studied by scientists from different areas of
+psychophysical sciences and those from different areas of
+computer science. Psychologists and neuro-scientists mainly deal
+with the human perception part of the topic where as engineers
+studying on machine recognition of human faces deal with the
+computational aspects of Face Recognition. Face Recognition is
+an important and natural human ability of a human being.
+However developing a computer algorithm to do the same thing
+is one of the toughest tasks in computer vision. Research over the
+past several years enables similar recognitions automatically.
+Various face recognition techniques are represented through
+various classifications such as, Image-based face recognition and
+Video-based recognition, Appearance-based and Model-based,
+2D and 3D face recognition methods. This paper gives a review of
+different face recognition techniques available as of today. The
+focus is on subspace techniques, investigating the use of image
+pre-processing applied as a preliminary step in order to reduce
+error rates. The Principle Component Analysis, Linear
+Discriminant Analysis and their modified methods of face
+recognition are implemented under subspace techniques,
+computing False Acceptance Rates (FAR)and False Rejection
+Rates (FRR) on a standard test set of images that pose typical
+difficulties for recognition. By applying a range of image
+processing techniques it is demonstrated that the performance is
+highly dependent on the type of pre-processing steps used and
+that Equal Error Rates (EER) of the Eigenface and Fisherface
+methods can be reduced using the method proposed in this
+paper.
+Keywords–Face Recognition, Normalization,
+Eigenfece, Fisher face, Fisher Liner Disriminant.
+Subspace,
+I. INTRODUCTION
+The research on face recognition has been conducted for
+more than thirty years, but, still more processes and better
+techniques for facial extraction and face recognition are
+needed. This research work aims to reduce the error rates
+using pre-processing techniques under subspace methods of
+recognition. The most existing techniques like Eigen faces,
+Principal Component Analysis, etc., have the low dimension
+of the solution to classification and generalization problems.
+Also, it is a challenging task in a less-controlled environment
+like different illumination variations for large databases. In
+order to overcome the above limitations, new subspace
+framework with pre-processing is proposed.
+ISBN: 978-1-4673-1601-9/12/$31.00 ©2012 IEEE
+II. FACE RECOGNITION TECHNIQUES
+Face recognition is an evolving area, changing and
+improving instantly. Many research areas affect face
+recognition - computer vision, optics, pattern recognition,
+neural networks, machine learning, psychology, etc. Face
+Recognition methods are classified as following:
+A. Geometric/Template Based approaches
+The template based methods compare the input image
+with a set of templates. The set of templates can be
+constructed using statistical tools like Support Vector
+Machines (SVM), Principal Component Analysis (PCA),
+Linear Discriminate Analysis (LDA), Independent Component
+Analysis (ICA), Kernel Methods or Trace Transforms. The
+geometry feature-based methods analyze local facial features
+and their geometric relationships. E.g., EBGM, LBP, etc.
+B. Piecemeal / Wholistic approaches
+These methods use the entire face as data for the system.
+C. Appearance-based/Model-based approaches
+Appearance methods can be classified as linear or non-
+linear, while model-based methods can be 2D or 3D.
+Examples of linear methods are PCA, LDA, ICA, etc. Kernel
+methods are come under non linear methods. Examples of
+model based approaches are EBGM, 3D Morphable model,
+etc.
+D. Template / statistical / neural network approaches
+In template matching patterns are represented by samples,
+models, pixels, curves, textures. The recognition function is
+usually a correlation or distance measure. In statistical
+approach patterns are represented as features. The recognition
+function is a discriminant function. In Neural networks, the
+representation may vary. There is a network function in some
+point.
+III. FACE RECOGNITION USING SUBSPACES
+TECHNIQUES
+Face Recognition plays a vital role in many applications
+such as criminal detection which is considered to be the most
+useful and eminent techniques for identifying a criminalized
+person. A face recognition system is supposed to recognize
+faces under different illumination and lighting conditions
+present in the images. An efficient system to recognize human
+faces can be approached through the integration of different
+techniques viz., Normalization, Feature Extraction and
+Classification under subspace techniques. Fig.1. represents the
+conceptual diagram on how the face can be recognized under
+103
+ICRTIT-2012different illumination and lighting conditions by this method
+for the viewer-cantered images. The input image is given to
+the image pre-processing to remove the illuminations, shades,
+lighting effects by using the illumination normalization
+technique without affecting to the face features which are
+needed for further processes. Then the features from the
+normalized image are extracted using a proposed subspace
+framework. Then the extracted features are trained using
+subspace classifier to get the identified image.
+A. Normalisation
+A pre-processing method which reduces the effect of
+various illumination conditions in the image is used. In
+Normalization, the pre-processing chain mainly categorized
+under five steps viz., RGB Image to Gray Scale Image,
+Gamma Correction, Difference of Gaussian, Masking and
+Equalization of Normalization. The pre-processing is an
+efficient method through which the darkness from the image
+is removed, still preserving the necessary information from
+the input image for further processing of feature extraction.
+Fig.1. shows the sequential steps of the effective pre-
+processing chain used in this paper as it is the first step in
+eliminating the noise or darkness from the input face image.
+Input
+Image
+RGB to
+Grayscale
+Gamma
+Correcti
+on
+DoG
+Filtering
+Masking
+image is free from the darkness by compressing all the dark
+regions into bright regions. It replaces the original gray-level I
+with I γ by considering γ > 0, but lies between 0 and 1 (i.e., γ Є
+[0, 1]). The underlying principle behind the gamma correction
+is that the intensity of the light reflected from an object is the
+product of the incoming illumination and the local surface
+reflectance. Here, the obtained image after gamma correction
+should be an illumination free image. The gamma value from
+0 to 1 is considered to be a full log transformation which is
+very strong to convert the dark regions. Hence the value of γ
+can be range from [0, 0.5] and by default the value of γ = 0.2
+is to be considered. Fig 2. shows the image and a histogram
+after gamma correction.
+Equalizati
+on of
+Normaliza
+tion
+Fig.2. Gamma Corrected Image and its corresponding histogram
+Fig.1. Sequence of Image Pre-processing Chain
+1) Input image
+The Input Images in Image Pre-processing Chain has the
+dimension of 150 x 130 which has been taken from the Yale–
+B database which are subjected to different variations. One
+input face image is projected to ten different illumination
+variations. Apart from the Yale–B dataset, the other test
+images which are RGB images are also considered for testing
+so that the image should be recognized even if the produced
+image is a RGB image.
+2) RGB Image to Greyscale
+The true colour RGB image is converted to gray scale
+intensity level so that the pixels can be set to 0 and 1 instead
+of 0 to 255 colours. The reason for not considering the image
+as RGB image itself is that it becomes a hectic process for
+identifying the location of a pixel. This conversion also helps
+in eliminating the hue and saturation information still
+retaining the luminance.
+3) Gamma Correction
+Gamma correction is nonlinear gray-level transformation
+used to correct the power-law transformation phenomena
+which perform the transformation of an input image to its
+original appearance. This transformed gamma-corrected
+4) Difference of Gaussian
+Gamma Correction does not remove the complete
+darkness, but, the local shadings can be removed by applying
+the high-pass filtering thus by simplifying the recognition
+problem. The high-pass filter attenuates low frequencies while
+passing high frequencies so that the edges of the image
+become sharper. Hence by implementing the filters using
+explicit convolution, boundary effects can be minimized. The
+process of convolution creates the mask from pixel to pixel in
+an image and thus computes the predefined quantity at each
+pixel. In order to significantly reduce the performance of the
+boundary conditions, Forward Fourier Transform (FFT) is
+utilized. Thus by establishing this filters, obviously produces a
+good result for the recognition of the features. Gaussian filters
+are the special analysis tools which are easy to manipulate.
+Utilizing the characteristics of Gaussian function, the
+gamma corrected image generates the informative image using
+the difference between the two Gaussian filters according to
+the local contrast information of the images. The two
+Gaussian filters with the variances σ1 =1.0 and σ2 = 2.0 by
+default (always σ1 < σ2) can be considered. Though gamma
+correction produces an informative image, still without DoG
+filtering, the resulting images suffer from reduced local
+contrast in shadowed regions.
+104
+ICRTIT-20125) Equalization of Normalization
+The last step of the pre-processing chain is the equalization
+of normalization which rescales the image intensity, thus
+highlights the most of the information by preserving the
+essential elements of visual appearance. This is done using the
+median of the absolute value of the signal based on following
+formula.
+Here is a strongly compressive exponent that reduces the
+influence of large values, τ is a threshold used to truncate the
+large values after the first phase of normalization, and the
+mean is over the whole unmasked part of the image. By
+default, the values of = 0.1 and τ = 10 is used. Now, the image
+is well-scaled, but still has the extreme values. To reduce this,
+can be used
+the hyperbolic tangent
+1) The BDPCA+LDA: algorithm
+BDPCA+LDA is an LDA approach that is applied on a
+low-dimensional BDPCA subspace, and thus can be used for
+fast facial feature extraction. Since less time is required to
+map an image matrix to BDPCA subspace, BDPCA+LDA is,
+at least, computationally faster than any subspace method.
+BDPCA+LDA first uses BDPCA to obtain feature matrix Y.
+The feature matrix Y is then transformed into feature victor y
+by concatenating the columns of Y. The LDA projector -
+W LDA =[φ 1 , φ 2, ... φ m ] is calculated by maximizing Fisher’s
+criterion:
+where
+is the generalized eigenvector of
+corresponding to the i th largest eigen value λ i..
+and
+(4)
+And S b is the between-class scatter matrix of y
+and thus limiting I to the range (-τ, τ).
+6) Histogram and Computation Time
+The difference between the input face image’s histogram
+before and after the proposed pre-processing stage is shown in
+the Fig. 3. This illustrates clearly how important the pre-
+processing to be done in order to reduce the unwanted noise or
+the highly variable lighting differences from the images to get
+the fruitful information for extracting of the features for the
+agent. Run time is considered to be very important. The
+computational time taken by the Matlab 7.4 is only about
+60ms for 150 x 130 dimension image.
+B. BDPCA+LDA: A subspace Feature Extractor
+This section proposes a fast feature extraction technique,
+Bi-Directional PCA plus LDA(BDPCA+LDA), which
+performs LDA in the BDPCA subspace. Compared to any
+subspace feature extraction method, BDPCA+LDA requires
+less computational and memory needs and can achieve
+competitive recognition accuracy. Apart from the various
+challenges that already addressed in preprocessing, this
+framework addresses singularity, over fitting and robustness.
+Fig.3. Difference between the histograms before and after preprocessing of
+the image under dim light condition
+And
+is the within-class scatter matrix of y,
+Where N i , y i, j and μ i are the number of feature vectors, the jth
+feature vector and the mean vector of class i, C is the number
+of classes, and μ is the mean vector of all the feature vectors.
+In summary, the main steps in BDPCA+LDA feature
+extraction are to first transform an image matrix X into
+BDPCA feature subspace Y by equation (7).
+and map Y into its 1Drepresentation y and then to obtain the
+final feature vector z by
+C.
+The Classifier
+The classifier considered in this paper is a subspace
+classifier, the most existing method – Fisher Liner
+Discriminate (FLD) that classifies unlabeled features based on
+their similarity with features in their training sets. Fisher's
+linear discriminant is a classification method that projects
+high-dimensional data onto a line and performs classification
+in this one-dimensional space. The projection maximizes the
+distance between the means of the two classes while
+minimizing the variance within each class. This defines the
+Fisher criterion, which is maximized over all linear
+projections, w:
+where m represents a mean, s 2 represents a variance, and the
+subscripts denote the two classes. In signal theory, this
+105
+ICRTIT-2012criterion is also known as the signal-to-interference ratio.
+Maximizing this criterion yields a closed form solution that
+involves the inverse of a covariance-like matrix. This method
+has strong parallels to linear perceptrons that significantly
+improves the results.
+IV. EXPERIMENTS
+To evaluate the proposed method a standard image set,
+FARET is used. A subset of the FERET database is chosen to
+evaluate this method. Several images of each individual with
+varied illumination are taken. The facial portion of each
+original image was cropped to a size of 80 80 and pre-
+processed using the proposed normalization, a pre-processing
+chain. We also compare BDPCA+LDA with other subspace
+methods, including Fisher faces, Eigenfaces. Since the aim is
+to evaluate the efficacy of feature extraction methods, the
+most existing classifier Fisher’s Linear Discriminant (FLD).
+To reduce the variation of recognition results, mean of 10 runs
+as the average recognition rate (ARR) is taken.
+The EER of a system can be used to give a threshold
+independent performance measure. The lower the EER is the
+better is the system's performance, as the total error rate which
+is the sum of the FAR and the FRR at the point of the EER
+decreases.
+Graph 2. Comparisons of the recognition rates obtained using different
+methods on the FERET subset.
+Table 1. Recognition performance of various subspace face recognition
+methods on the FERET database
+Methods
+ARR%
+ERR%
+Eigen
+faces
+78.26
+19.1
+Fsherfaces LDA+BDPCA
+84.69
+16.6 87.16
+14.8
+V. CONCLUSION
+The approach in this work is primarily to reduce the error
+rates by using preprocessing techniques and recognizing using
+subspace methods. A new subspace framework is used in this
+paper for better recognition. The subspace framework applied
+to this work would give significant results. Experiments
+would be done on standard set of data bases and FAR and
+FRR would be computed in order to find the error rates
+(ERR). This proposed approach would reduce the ERR of the
+subspace methods.
+REFERENCES
+Graph.1. Equal Error Rates of face recognition methods with image
+preprocessing technique used and not used
+Both the Fisher face and Eigen face methods would
+perform best when used with preprocessing technique,
+achieving low EER than that of no preprocessing is used. The
+LDA+BDPCA method would achieve the lowest EER when
+used with the proposed normalization pre- processing
+technique. Lowest computational time and less memory
+requirements are expected with this method.
+Average recognition rates and Equal error rates are
+compared with other subspace techniques such as fisher faces
+and eigen faces and better accuracy rates and low ERR would
+be achieved over the other subspace methods.
+[1] W. ZHAO, R. CHELLAPPA, P. J. PHILLIPS “Face Recognition: A
+Literature Survey” ACM Computing Surveys, Vol. 35, No. 4, December
+2003, pp. 399–458.
+[2] Xiaoyang Tan and Bill Triggs, “Enhanced Local Texture Feature Sets
+for Face Recognition Under Difficult Lighting Conditions”, IEEE Trans,
+on Image Processing, Vol. 19, No.6, June 2010.
+[3] Belhumeur, P., Hespanha, J., &Kriegman, D. (1997). Eigenfaces vs.
+Fisherfaces: Recognition Using Class Specific Linear Projection. IEEE
+Transactions on Pattern Analysis and Machine Intelligence, 19(7).
+[4] Wolf, Lior. (2009) Face Recognition, Geometric vs. Appearance-Based.
+Encyclopedia of Biometrics, Vol. 2.
+[5] Wolf, Lior. (2009) Face Recognition, Geometric vs. Appearance-Based.
+Encyclopedia of Biometrics, Vol. 2.
+[6] Starovoitiv, V., &Samal, D. (1999).A geometric approach to face
+recognition.Proc. IEEE-EURASIP Workshop on Nonlinear Signal and
+Image, 2, 210-213.
+[7] Baeka, J. &Kimb, M. (2004) Face recognition using partial least squares
+components. Pattern Recognition, Vol.37, 1303-1306.
+[8] Bartlett, M.S.;Movellan, J.R. &Sejnowski, T.J. (2002) Face Recognition
+by Independent Component Analysis. IEEE Trans. Neural Network,
+Vol.13, No.6, 1450-1464.
+[9] Belhumeur, P. N.; Hespanha, J. P. &Kriegman, D. J. (1997) Eigenfaces
+vs Fisherfaces: recognition using class specific linear projection. IEEE
+Trans. Pattern Analysis and Machine Intelligence, Vol.20, No.7, 711-
+720.
+106
+ICRTIT-2012[10] Cevikalp, H.; Neamtu, M.; Wilkes, M. &Barkana, A. (2005)
+Discriminative common vectors for face recognition. IEEE Trans
+Pattern Analysis and Machine Intelligence, Vol. 27, No.1, 4-13.
+[11] Liu, C. (2004) Gabor-based kernel PCA with fractional power
+polynomial models for face recognition”, IEEE Trans. Pattern Analysis
+and Machine Intelligence, Vol. 26, No. 5, 572-581.
+[12] Liu, C. & Wechsler, H. (1998) Enhanced Fisher linear discriminant
+models for face recognition.Proc. 14th Int’l Conf. Pattern Recognition,
+Vol. 2, pp. 1368-1372.
+[13] Liu, C. & Wechsler, H. (2002) Gabor feature based classification using
+the enhanced fisher linear discriminant model for face recognition. IEEE
+Trans. Image Processing, Vol.10, No.4, 467-476.
+[14] Liu, K.; Cheng, Y.-Q. & Yang, J.-Y. (1993) Algebraic feature extraction
+for image recognition based on an optimal discriminant criterion.
+Pattern Recognition, Vol.26, No.6, 903-906.
+107
+ICRTIT-2012

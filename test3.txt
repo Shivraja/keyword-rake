@@ -1,0 +1,1399 @@
+
+Bigram-Based Natural Language Model and Statistical Motion Symbol
+Model for Scalable Language of Humanoid Robots
+Wataru Takano and Yoshihiko Nakamura
+Abstract
+— The language is a symbolic system unique to
+human being. The acquisition of language, which has its
+meanings in the real world, is important for robots to un-
+derstand the environment and communicate with us in our
+daily life. This paper proposes a novel approach to establish a
+fundamental framework for the robots which can understand
+language through their whole body motions. The proposed
+framework is composed of three modules : “motion symbol”,
+“motion language model”, and “natural language model”.
+In the motion symbol module, motion data are symbolized
+by Hidden Markov Models (HMMs). Each HMM represents
+abstract motion patterns. Then the HMMs are defined as
+motion symbols. The motion language model is stochastically
+designed for links between motion symbols and words. This
+model consists of three layers of motion symbols, latent states
+and words. The connections between the motion symbol and
+the latent state, and between the latent state and the words
+are denoted by two kinds of probabilities respectively. One
+connection is represented by the probability that the motion
+symbol generates the latent state, and the other connection is
+represented by the probability that the latent state generates
+the word. Therefore, the motion language model can connect
+the motion symbols to the words through the latent state. The
+natural language model stochastically represents sequences of
+words. In this paper, a bigram, which is a special case of N-gram
+model, is adopted as the natural language model. This model
+has the words as nodes and transitions between two words as
+edges. Therefore sentence structure is expressed as transitions
+among words. The integration of the motion language model
+and natural language model can be implemented by the
+search computation for sentences corresponding to motions
+and for motions corresponding to sentences. Especially, the
+usage of the bigram as the natural language model provides
+a simple search computation so that appropriate and fast
+bidirectional computation between the motions and language
+can be achieved. Our approach makes it possible for humanoid
+robots not only to interpret motions as sentences but also to
+generate motions from sentences. The tests by using various
+motions and words validate our framework for the language
+acquisition of humanoid robots.
+I. I
+NTRODUCTION
+Language is a symbolic system unique to human. We
+can understand the environment and communicate with each
+other efficiently using language. The symbol is a pair of
+signifier and signified. The link between the signifier and
+the signified is not necessarily dependent on the physical
+properties, but is arbitrary. The link forms the symbolic
+structure and underlies the cognition. Therefore, when robots
+This research was supported by Category S of Grant-in-Aid for Scientific
+Research (20220001), Japan Society for the Promotion of Science, and
+Presto, Japan Science and Technology Agency.
+W. Takano and Y. Nakamura are with Mechano-
+Informatics, The University of Tokyo,
+{
+takano,
+nakamura
+}
+@ynl.t.u-tokyo.ac.jp
+.
+deal with language in our daily lives, they need to learn the
+links between the signifier and the signified.
+In robotics, a lot of researches have been made on the
+intelligent robots, which encodes the sensori-motor infor-
+mation into a set of model parameters such as Recurrent
+Neural Network with Parametric Bias (RNNPB)[1], MOdule
+Selection And Identification for Control (MOSAIC)[2], and
+stochastic model approach [3][4][5]. The RNNPB optimizes
+the parametric biases so that the error between the perception
+and prediction of the sensori-motor information can be
+minimized. Each set of parametric biases represents a motion
+pattern symbolically. MOSAIC consists of multiple pairs of
+forward and inverse modules. The forward module is a gener-
+ator of motion pattern and the inverse module is a recognizer.
+Each pair of the forward and inverse module corresponds to
+a symbol of motion pattern. Hidden Markov Model (HMM)
+is the efficient stochastic framework to symbolize motion
+patterns. The HMM optimizes its parameters so that the
+likelihood that training motion data is generated from the
+HMM can become the largest. Each HMM represents the
+motion pattern. The likelihood that the HMM corresponding
+to the observation generates the motion data should be larger
+than any other HMM, then the observation can be recognized
+as the HMM. The HMM can also generate the motion data
+according to the node transition and the output distribution on
+the node. These frameworks have been developed to commu-
+nication models [6][7], and to linguistic models [8][9][10].
+However, the previous frameworks do not deal with a large
+vocabulary and various motions so far. Humanoid robots
+need to understand a lot of linguistic expressions and motion
+representations.
+This paper describes the methodology for integrating
+symbolized motion patterns with natural language. We have
+proposed the integration framework established on two kinds
+of modules so far [11][12]. One is “motion language model”
+and the other is “natural language model”. The motion
+language model stochastically represents the association be-
+tween the symbolized motion patterns and words. The natural
+language model derives the structure of sentences by rep-
+resenting stochastic transitions among words. The previous
+framework uses an HMM as the natural language model,
+where each node represents a word class, and generates
+multiple words stochastically. In this proposed framework,
+the bigram model, which assumes that a word depends on
+only its preceding word, is applied to the natural language
+model so that realtime computation between motion patterns
+and language can be realized by reducing the computational
+complexity. The motion language model generates multiple
+2012 IEEE International Conference on Robotics and Automation
+RiverCentre, Saint Paul, Minnesota, USA
+May 14-18, 2012
+978-1-4673-1405-3/12/$31.00 ©2012 IEEE
+1232
+Motion Language Model
+(Semantic Graph)
+motion patterns
+words
+sentences
+Natural Language Model
+(Syntax Graph)
+syntax constraint
+semantic constraint
+latent states
+“throw”
+“ball”
+“eat”
+“eat”
+“ball”
+“throw”
+words
+Fig. 1. The motion is connected to language by integrating the motion
+language model with the natural language model. The motion language
+model represents the association between the motion symbols and the words
+stochastically. The natural language model also stochastically represents a
+sequence of words. The integration makes it possible to convert both from
+the motions to sentences and from the sentences to motions.
+words from the symbolized motion patterns, and the natural
+language model arranges the words into structurally-correct
+sentences. This computation leads to the interpretation of
+motion patterns as sentences for the humanoid robots. Ad-
+ditionally, the natural language model segments a sentence
+into words, and the motion language model generates the
+symbolized motion patterns from the words in the inverse
+way. This computation make it possible for the humanoid
+robots to generate their own behavior corresponding to the
+sentence. Therefore, the proposed integration of the sym-
+bolized motion patterns and the natural language enables the
+bidirectional computation between the motions and language
+for the humanoid robots.
+II. L
+ANGUAGE FROM
+M
+OTION
+Our framework is composed on “motion language model”
+and “natural language model” as illustrated by Fig.1. The
+motion language model represents the association between
+the symbolized motion patterns and words stochastically.
+The motion patterns are symbolized by Hidden Markov
+Models (HMMs). The parameters of HMM are optimized
+so that the likelihood that the training motion pattern data
+is generated by the HMM can become the largest, then the
+HMM develops to the motion symbol. The natural language
+model represents the sentence structure as transitional prob-
+...
+...
+motion symbols
+λ
+i
+=1,2,3 N
+i
+...
+λ
+latent states
+s
+j
+=1,2,3 N
+j
+...
+s
+λ
+i
+s
+j
+...
+...
+morpheme words
+ω
+k
+=1,2,3 N
+k
+...
+ω
+ω
+k
+...
+P( | )
+ω
+k
+s
+j
+...
+P( | )
+λ
+i
+s
+j
+Fig. 2. The motion language model connects the motion symbols and
+words stochastically. Three layers of the motion symbols, the latent states,
+and the words forms the motion language model. The links between the
+motion symbols and the latent states and between the latent states and the
+words are denoted by the two kinds of probabilities. One is the probability
+that the motion symbol generates the latent state. The other is the probability
+that the latent state generate the word. These probabilities can be optimized
+by EM algorithm.
+ability among words stochastically. In community of the
+natural language processing, the sentence structure is derived
+by HMM or Conditional Random Field (CRF), which are
+applied to the morphological analysis. In our framework,
+the simple stochastic model called bigram model is used to
+represent the sentence structure by assuming that each word
+depends on only its preceding word.
+A. Motion Language Model [11]
+This section describes the motion language model which
+stochastically connects motion symbols to words. Fig.2 il-
+lustrates the overview of the motion language model. The
+motion language model is composed of three layers. The
+motion symbols, the latent states and the words constitute
+the top layer, the interlayer and the bottom layer respectively.
+The motion symbols are connected to the words through the
+latent states.
+The connections between the motion symbol and the latent
+state, and between the latent state and the word are given
+as associative probabilities :
+P
+(
+s
+|
+λ
+)
+and
+P
+(
+ω
+|
+s
+)
+, where
+λ,s
+and
+ω
+are the motion symbol, the latent state and
+word respectively, and
+P
+(
+s
+|
+λ
+)
+and
+P
+(
+ω
+|
+s
+)
+represent the
+probability that the motion symbol
+λ
+generates the latent
+state
+s
+and the probability that the latent state
+s
+generates
+the word
+ω
+.
+The two kinds of stochastic parameters in the motion
+language model,
+P
+(
+s
+|
+λ
+)
+and
+P
+(
+ω
+|
+s
+)
+, are optimized by
+EM (Expectation Maximization) algorithm, which alternately
+processes two steps : Expectation step (E-step) and Maxi-
+mization step (M-step). Training pairs of the motion sym-
+bols and sentences (a sequence of the words) are given.
+
+λ
+k
+;
+ω
+k
+1
+,ω
+k
+2
+,
+···
+,ω
+k
+n
+k
+k
+=1
+,
+2
+,
+3
+,
+···
+,N
+
+denotes the set of
+training pairs of the motion symbols and sentences. Note that
+N
+is the number of training pairs and that
+n
+k
+denotes the
+number of the words included in the
+k
+-th sentence. Both of
+the motion symbol
+λ
+k
+and the sentence
+(
+ω
+k
+1
+,ω
+k
+2
+,
+···
+,ω
+k
+n
+k
+)
+signify
+k
+-th motion pattern.
+E-step estimates distributions of the latent states based
+on model parameters optimized in previous M-step. The
+1233
+P( | )
+“throw”
+“ball”
+“eat”
+“a”
+“student”
+“apple”
+“player”
+“read”
+“books”
+“an”
+“ball” “a”
+P( | )
+“apple” “an”
+P( | )
+“books” “read”
+Fig. 3. The natural language model stochastically represents the sentence
+structure. The bigram is applied to the model. A node is a word and an
+edge is the transition between two words in the model. The model has
+the transitional probability, which can be optimized from the occurrence
+frequency of a word and co-occurrence frequency of two words in the
+training sentences.
+distributions of the latent states are derived as follows.
+P
+(
+s
+|
+λ
+k
+,ω
+k
+i
+)=
+P
+(
+ω
+k
+i
+|
+s,λ
+k
+,θ
+)
+P
+(
+s
+|
+λ
+k
+,θ
+)
+N
+s
+
+j
+=1
+P
+(
+ω
+k
+i
+|
+s
+j
+,λ
+k
+,θ
+)
+P
+(
+s
+j
+|
+λ
+k
+,θ
+)
+(1)
+where
+θ
+is a set of the previously optimized model parame-
+ters
+P
+(
+s
+|
+λ
+)
+and
+P
+(
+ω
+|
+s
+)
+.
+M-step optimizes the model parameters such that sum-
+mation of expectation of log-likelihood that the motion
+symbol
+λ
+k
+generates the sentence
+(
+ω
+k
+1
+,ω
+k
+2
+,
+···
+,ω
+k
+n
+k
+)
+can
+be maximized. We can obtain the following optimal model
+parameters.
+P
+(
+s
+|
+λ
+)=
+N
+
+k
+=1
+n
+k
+
+i
+=1
+δ
+(
+λ,λ
+k
+)
+P
+(
+s
+|
+λ
+k
+,ω
+k
+i
+)
+N
+s
+
+j
+=1
+N
+
+k
+=1
+n
+k
+
+i
+=1
+δ
+(
+λ,λ
+k
+)
+P
+(
+s
+j
+|
+λ
+k
+,ω
+k
+i
+)
+(2)
+P
+(
+ω
+|
+s
+)=
+N
+
+k
+=1
+n
+k
+
+i
+=1
+δ
+(
+ω,ω
+k
+i
+)
+P
+(
+s
+|
+λ
+k
+,ω
+k
+i
+)
+N
+ω
+
+j
+=1
+N
+
+k
+=1
+n
+k
+
+i
+=1
+δ
+(
+ω
+j
+,ω
+k
+i
+)
+P
+(
+s
+|
+λ
+k
+,ω
+k
+i
+)
+(3)
+where
+δ
+(
+λ
+i
+,λ
+j
+)
+and
+δ
+(
+ω
+i
+,ω
+j
+)
+are Kronecker deltas.
+δ
+(
+λ
+i
+,λ
+j
+)
+and
+δ
+(
+ω
+i
+,ω
+j
+)
+become 1 if
+i
+is equal to
+j
+. Otherwise, they
+become 0 respectively.
+We alternately estimate the distribution of the latent state
+(E-step) and optimize the model parameters (M-step), and
+then the motion language model can represent association
+between the motion symbols and words.
+B. Bigram-Based Natural Language Model
+In a field of natural language processing, a lot of re-
+searches have been made on modeling the sentence structure.
+Especially, stochastic models have advantage that they can
+deal with a lot of words. Actually some language tools
+based on stochastic models of CRF [13] or HMM [14] for
+morphological analysis have been widely used. Our previous
+framework also used HMM for the natural language model,
+where sentence structure can be stochastically derived. In
+this paper we construct the natural language model by using
+bigram model so that computational complexity can be
+reduced. The bigram model is the special case of N-gram
+model. It assumes that the word is conditionally dependent
+on its preceding word.
+Fig.3 illustrates the bigram-based natural language model,
+where a node corresponds to a word and an edge cor-
+responds to transition between two words. The natu-
+ral language model is defined by transitional probability
+{
+P
+(
+ω
+i
+|
+ω
+j
+)
+|
+i,j
+=1
+,
+2
+,
+3
+,
+···
+,N
+ω
+}
+that the word
+ω
+i
+follows
+the word
+ω
+j
+.
+The optimal transitional probability can be derived as
+follows,
+P
+(
+ω
+i
+|
+ω
+j
+)=
+N
+(
+ω
+j
+,ω
+i
+)
+N
+(
+ω
+j
+)
+(4)
+where
+N
+(
+ω
+j
+)
+is the occurrence frequency of the word
+ω
+j
+,
+and
+N
+(
+ω
+j
+,ω
+i
+)
+is the co-occurrence frequency of the two
+words
+ω
+i
+,ω
+j
+in the training sentences. Note that the co-
+occurrence frequency is counted only when the word
+ω
+i
+follows the word
+ω
+j
+.
+C. Conversion from Motion to Language
+The integration of the motion language model and the
+natural language model enables the generation of sentences
+from motion. The motion symbol can be obtained by motion
+recognition process which search for the motion symbol
+with the largest likelihood that the motion data is generated
+by HMM. Conversion from the motion symbol
+λ
+to the
+sentence
+̃
+ω
+is the search for the sentence which is the most
+likely generated from the motion symbol through the motion
+language model and the natural language model. The search
+can be expressed by the following equation.
+̃
+ω
+=argmax
+ω
+P
+(Ω
+|
+λ
+)
+P
+(
+ω
+|
+Ω)
+(5)
+where
+ω
+is a sequence of words (sentence),
+[
+ω
+[1]
+,ω
+[2]
+,
+···
+,ω
+[
+l
+]]
+, and
+Ω
+is a set of words,
+{
+ω
+[1]
+,ω
+[2]
+,
+···
+,ω
+[
+l
+]
+}
+. The length of the sentence is
+l
+.
+P
+(Ω
+|
+λ
+)
+is the likelihood that the set of words
+Ω
+is
+generated from the motion symbol
+λ
+by the motion
+language model, and the
+P
+(
+ω
+|
+Ω)
+is the likelihood that the
+sentence
+ω
+is generated from the set of words
+Ω
+by the
+natural language model. These likelihoods can be derived
+as follows.
+P
+(Ω
+|
+λ
+)=
+l
+
+i
+=1
+P
+(
+ω
+[
+i
+]
+|
+λ
+)
+(6)
+P
+(
+ω
+|
+Ω) =
+l
+−
+1
+
+i
+=1
+P
+(
+ω
+[
+i
++1]
+|
+ω
+[
+i
+])
+(7)
+Eq.(6) can be calculated by marginalizing the probabilities
+of the motion language model in Eq.(2) and Eq.(3) over
+the latent states. Eq.(7) can also be calculated by using the
+probabilities of the natural language model in Eq.(4).
+1234
+A student plays tennis.
+A student swings a tennis racket.
+A player plays tennis.
+A wife sweeps with a broom.
+A wife cleans .
+A student crosses his legs.
+A director crosses his leg.
+A coach crosses his leg
+[A] [B] [C]
+Fig. 4. Training pairs of motion data and sentence are given to the motion
+language model. The same sentences are given to the natural language model
+as the training data. We give the motion data on the left side (motion data
+[A]) three sentences : “A student plays a tennis”, “A student swings a tennis
+racket” and “An athlete plays tennis”. The motion data on the center (motion
+data [B]) is given three sentences : “A student crosses his legs”, “A director
+crosses his leg” and “A coach crosses his leg”. The motion data on the right
+side (motion data [C]) is given two sentences “A wife cleans with a bloom”
+and “A wife cleans the room”.
+By using Eq.(6), Eq.(7) and logarithm, we can rewrite
+Eq.(5) as the following form.
+̃
+ω
+=argmax
+ω
+
+l
+
+i
+=1
+log
+P
+(
+ω
+[
+i
+]
+|
+λ
+)+
+l
+−
+1
+
+i
+=1
+log
+P
+(
+ω
+[
+i
++1]
+|
+ω
+[
+i
+])
+
+This equation can be solved by A* search algorithm. In the
+case that a sequence of words,
+[
+ω
+[1]
+,ω
+[2]
+,
+···
+,ω
+[
+l
+
+]]
+is deter-
+mined, we set probabilities
+P
+(
+ω
+[
+i
+]
+|
+λ
+)
+and
+P
+(
+ω
+[
+i
++1]
+|
+ω
+[
+i
+])
+to
+1
+for the undetermined words, and conduct a reasonable
+overestimate of the likelihood.
+D. Conversion from Language to Motion
+The integration of the motion language model and the
+natural language model also enables the generation of motion
+from a sentence. The sentence
+ω
+is segmented into a set
+of words
+Ω=
+{
+ω
+[1]
+,ω
+[2]
+,
+···
+,ω
+[
+l
+]
+}
+by the morphological
+analysis. The conversion from the sentence
+ω
+to the motion
+symbol
+̃
+λ
+can be written as the search of the motion symbol
+which is the most likely generated from the sentence through
+the motion language model. The search can be expressed as
+the following form.
+̃
+λ
+=argmax
+λ
+P
+(
+λ
+|
+ω
+[1]
+,ω
+[2]
+,
+···
+,ω
+[
+l
+])
+(8)
+=argmax
+λ
+l
+
+i
+=1
+log
+P
+(
+ω
+[
+i
+]
+|
+λ
+)
+(9)
+where we assume that the word
+ω
+[
+i
+]
+is conditionally depen-
+dent only on the motion symbol
+λ
+. Eq.(9) can be calculated
+by marginalizing the probabilities of the motion language
+model in Eq.(2) and Eq.(3) over the latent states.
+III. E
+XPERIMENT
+A. Training of Motion and Language
+Our framework of the motion language model and the
+natural language model was tested on human whole body
+motion data. The motion data was obtained through a optical
+motion capture system. The capture system can measure the
+positions of 35 markers attached to a performer. Inverse
+kinematics computation based on the human figure model
+with 34 DOFs converts a sequence of the marker positions
+to a sequence of the body position, the body attitude and
+the marker positions in the body local coordinate system.
+The whole body motion is represented by a sequence of the
+horizontal velocity of the body
+̇
+p
+Bx
+,
+̇
+p
+By
+, the body vertical
+position
+p
+Bz
+, the body roll and pitch angle
+θ
+x
+,θ
+y
+,the
+body yaw rate
+θ
+z
+, and the marker positions in the body
+local coordinate system
+B
+p
+i
+=
+
+B
+p
+ix
+,
+B
+p
+iy
+,
+B
+p
+iz
+:(
+i
+=
+1
+,
+2
+,
+···
+,
+35)
+.
+An HMM is trained using each sequence of motion data.
+467 motion symbols are derived (
+N
+λ
+= 467
+). The sequence
+is also given the multiple sentences which explains the
+sequence. Fig.4 shows some samples of the captured motion
+data and the corresponding sentences. The motion data in
+Fig.4 [A] is obtained by measuring the performer playing
+tennis. This motion data is manually given three sentences :
+“A student plays tennis”, “A student swings a tennis racket”,
+and “A player plays tennis”. The number of the given
+sentences is 764 (
+N
+= 764
+). 241 kinds of words are used
+in the sentences (
+N
+ω
+= 241
+). These motion symbols and
+sentences are used as training data for the motion language
+model and the natural language model. Note that the number
+of the latent state in the motion language model is set to
+900 (
+N
+s
+= 900
+). The EM algorithm of the motion language
+model is iterated 10 times.
+B. Generation of Sentence from Motion
+The proposed computation for generation of sentences
+from the motion was tested. This computation is fundamental
+for humanoid robots which observe human and interpret his
+behaviors as sentences. The human behavior is measured by
+the optical motion capture system, the behavior is recognized
+as a motion symbol, and the sentences are generated from the
+motion symbol through the motion language model and the
+natural language model. Fig.5 shows the experimental results
+of the generation of sentences from the motion. Note that the
+motion data used in this test are not training data, and that the
+test motion data are manually given correct sentences. Three
+sentences that are most likely generated from the motion are
+displayed in the order of the likelihood of the generation. In
+Fig.5 [A], a performer plays tennis. Our framework generates
+three sentences, “A student” plays tennis”, “A student swings
+tennis”, and “A player plays tennis” from this motion. The
+two sentences, “A student” plays tennis” and “A player plays
+tennis” are same as the correct sentences for this motion.
+The sentence, “A student swing tennis”, is different from the
+correct sentences. However the verb “swing” is used in the
+both sentences, then the verb corresponding to the motion
+is generated. The motion [B] in Fig.5 shows the motion of
+“crossing one’s legs”. Three sentences, “A student crosses his
+legs”, “A director crosses his legs”, and “coach crosses his
+legs”, are generated from this motion. All of them are correct.
+The correct sentences are same as the sentences shown by
+Fig.4 [B]. In Fig.5 [C], a performer cleans using a broom.
+This motion is interpreted as sentences, “A wife cleans”, “A
+wife sweeps with a broom”, and “A student cleans”. Two
+1235
+A student falls down.
+A player falls down.
+A person falls down.
+A wife cooks.
+A student cooks
+A wife chops with a knife.
+A student apologizes.
+A student apologizes deeply.
+A player apologizes.
+A wife cleans.
+A wife sweeps with a broom.
+A student cleans..
+A student plays tennis.
+A student swings tennis.
+A player plays tennis.
+A student calls.
+A student calls on the phone.
+A student makes a phone call.
+A player tosses a ball.
+A student tosses a ball.
+A player plays volleyball.
+A player dodges.
+A person dodges.
+A student dodges.
+A musian plays the piano.
+Play a person.
+A musian plays the Japanese harp.
+A student stomps down.
+A student stomps on the ground.
+A player stomps down.
+A student plays badminton.
+A player plays badminton.
+A student dod
+g
+es..
+A student crosses his legs.
+A director crosses his legs
+A coach crosses his legs
+[A] [B] [C]
+[D]
+[E] [F] [G]
+[H]
+[I] [J] [J]
+[K]
+Fig. 5. The motion is interpreted as sentences. Three sentences, which are the most likely generated from the motion, are displayed. The motion of
+playing tennis is interpreted as the sentences, “A student plays tennis”, “A student swings tennis” and “A player plays tennis”. The sentences, “A stu
+dent
+crosses his legs”, “A director crosses his legs” and “A coach crosses his legs” are associated from the motion [B]. They are same as the training sentenc
+es.
+The motion [C] is converted to the sentences, “A wife cleans”, “A wife sweeps with a broom” and “A student cleans” are generated from the motion [C].
+Other motions are also appropriately interpreted as sentences.
+sentences with the largest likelihood are the same as correct
+sentences, as shown by Fig.4. Although the sentence, “A
+student cleans” is not given as the correct sentence, it rep-
+resents the motion correctly. Different verbs of “clean” and
+“sweep” are generated, and various kinds of sentences are
+made corresponding to the motion. Other motions in Fig.5
+are also interpreted as the correct sentences. We measured
+computational time of conversion from motion data to five
+sentences. The conversion can be divided into two processes.
+One is to recognize the motion as a motion symbol. The other
+is to search for the sentences corresponding to the motion
+symbols. The mean computational time of the recognition
+process was 288[ms], and the mean computational time of
+the search for the sentences was 462[ms] on a computer with
+3.5GHz Intel Xeon CPU and 32GB memory. In previous
+framework, the mean computational time of the search of
+the sentences was 38.6[s]. Our proposed framework can
+reduce the computational time, and is expected to be used for
+realtime conversion from motion to sentences. The experi-
+mental results demonstrate that our framework of the motion
+language model and the natural language model can be used
+for generation of sentences from motion patterns.
+C. Generation of Motion from Sentence
+The generation of motion from a sentence was tested. This
+computation is also fundamental for humanoid robots which
+associate motions from sentences and perform various kinds
+of behaviors in the real environments. The given sentence is
+segmented into words through the morphological analysis,
+and a motion is associated from the words by the motion
+language model. Fig.6 shows the experimental results of
+motion generation from sentences. In Fig.6 [A], a sentence,
+“A player plays volleyball” is given. The motion of “tossing
+a ball” is generated In Fig.6 [B], a sentence, “A musician
+1236
+[A player plays volleyball ]
+[A musician plays the violin ]
+[A student wears a shirt ]
+[1] [2] [3] [4]
+[1] [2] [3] [4]
+[1] [2] [3] [4]
+Fig. 6. A sentence is segmented into a set of words through the morpholog-
+ical analysis. The motion corresponding to the sentence is associated from
+the set of words through the motion language model. The association is
+expressed as a search computation for the motion symbol with the largest
+likelihood that the set of words generate a motion symbols. The derived
+motion symbol, which is denoted by the Hidden Markov Model, generates a
+time series of motion data, then a humanoid robot can associate the behavior
+corresponding to the sentence.
+plays the violin” is given, and then the motion of “playing
+the violin” is generated. In Fig.6, the motion of “wearing a
+shirts” is generated from a sentence “A student wears a shirt”.
+These experimental results demonstrates that the proposed
+framework can generate motions from given sentences.
+IV. C
+ONCLUSION
+The contributions of this paper are summarized as follows:
+1) This paper proposes the integration of the motion
+language model and the natural language model. The
+motion language model represents association between
+motion symbols and words via latent states stochasti-
+cally. The natural language model is the bigram model
+which represents sentence structure as stochastic tran-
+sitions among words. This framework is fundamental
+for intelligence of humanoid robots. This enables the
+humanoid robots to interpret motions as sentences and
+generate motions from sentences.
+2) The two pathways between the motion language model
+and the natural language model are derived as search
+computation. One is to interpret motions as sentences.
+This is achieved by associating words from the motion
+in the motion language model and making a sequence
+of associated words in the natural language model.
+The other is to generate motions corresponding to
+sentences. The sentences are segmented into words
+by the morphological analysis, and the motions are
+associated from the words in the motion language
+model.
+3) We constructed the motion language model and the
+natural language model by using 467 motion symbols,
+241 words and 764 sentences. The tests of the gener-
+ation of sentences from motions and the generation of
+motions from sentences validate the proposed frame-
+work.
+REFERENCES
+[1] J. Tani and M. Ito, “Self-organization of behavioral primitives as
+multiple attractor dynamics: A robot experiment,”
+IEEE Transactions
+on Systems, Man and Cybernetics Part A: Systems and Humans
+,
+vol. 33, no. 4, pp. 481–488, 2003.
+[2] M. Haruno, D. Wolpert, and M. Kawato, “Mosaic model for sensori-
+motor learning and control,”
+Neural Computation
+, vol. 13, pp. 2201–
+2220, 2001.
+[3] A. Billard and R. Siegwart, “Robot learning from demonstration,”
+Robotics and Autonomous Systems
+, vol. 47, pp. 65–67, 2004.
+[4] T. Inamura, I. Toshima, H. Tanie, and Y. Nakamura, “Embodied
+symbol emergence based on mimesis theory,”
+International Journal
+of Robotics Research
+, vol. 23, no. 4, pp. 363–377, 2004.
+[5] T. Nakamura, T. Nagai, and N. Iwahashi, “Bag of multimodal lda mod-
+els for concept formation,” in
+Proceedings of the IEEE International
+Conference on Robotics and Automation
+, 2011, pp. 6233–6238.
+[6] W. Takano, K. Yamane, T. Sugihara, K. Yamamoto, and Y. Nakamura,
+“Primitive communication based on motion recognition and generation
+with hierarchical mimesis model,” in
+Proceedings of the IEEE Interna-
+tional Conference on Robotics and Automation
+, 2006, pp. 3602–3609.
+[7] T. Ogata, S. Matsumoto, J. Tani, K. Komatani, and H. G. Okuno,
+“Human-robot cooperation using quasi-symbols generated by rnnpb
+model,” in
+Proceedings of the IEEE International Conference on
+Robotics and Automation
+, 2007, pp. 2156–2161.
+[8] Y. Sugita and J. Tani, “Learning semantic combinatoriality from the
+interaction between linguistic and behavioral processes,”
+Adaptive
+Behavior
+, pp. 33–52, 2005.
+[9] W. Takano, K. Yamane, and Y. Nakamura, “Capture database through
+symbolization, recognition and generation of motion patterns,” in
+Proceedings of the IEEE International Conference on Robotics and
+Automation
+, 2007, pp. 3092–3097.
+[10] K. Sugiura, N. Iwahashi, H. Kashioka, and S. Nakamura, “Active
+learning of confidence measure function in robot language acquisition
+framework,” in
+Proceedings of the 2010 IEEE/RSJ International
+Conference on Intelligent Robots and Systems
+, 2010, pp. 1774–1779.
+[11] W. Takano and Y. Nakamura, “Statistically integrated semiotics that
+enables mutual inference between linguistic and behavioral symbols
+for humanoid robots,” in
+Proceedings of the IEEE International
+Conference on Robotics and Automation
+, 2009, pp. 646–652.
+[12] ——, “Associative processes between behavioral symbols and a large
+scale language model,” in
+Proceedings of the IEEE International
+Conference on Robotics and Automation
+, 2010, pp. 2404–2409.
+[13] T. Kudo, K. Yamamoto, and Y. Matsumoto, “Applying conditional
+random fields to japanese morphological analysis,” in
+Proceedings
+of the 2004 Conference on Empirical Methods in Natural Language
+Processing
+, 2004, pp. 230–237.
+[14] K. Takeuchi and Y. Matsumoto, “Hmm parameter learning for japanese
+morphological analyzer,” in
+Proceedings of the 10th Pacific Asia
+Conference on Language, Information and Computation
+, 1995, pp.
+163–172.
+1237
+

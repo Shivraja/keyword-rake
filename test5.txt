@@ -1,0 +1,504 @@
+2011 International Conference on Computational Intelligence and Communication Systems
+Automatic Face Recognition System by Combining Four Individual Algorithms
+Manzoor Ahmad Lone S. M. Zakariya and Rashid Ali
+Department of Computer Science & Engineering
+Baba Ghulam Shah Badshah University
+Rajouri, J & K, India
+mahmadlone@gmail.com Department of Computer Engineering, ZHCET
+Aligarh Muslim University
+Aligarh, India
+s.zakariya@gmail.com, rashidaliamu@rediffmail.com
+Abstract — The objective of face recognition involves the
+extraction of different features of the human face from the face
+image for discriminating it from other persons. It is the
+problem of searching a face in reference database to find the
+matches as a given face. The purpose is to find a face that has
+highest similarity with a given face in the database. Many face
+recognition algorithms have been developed and used as an
+application of access control and surveillance. For enhancing
+the performance and accuracy of biometric face recognition
+system, we use a multi-algorithmic approach, where in a
+combination of four different individual face recognition
+techniques is used. In this paper, we develop a face recognition
+systems based on one combination of four individual
+techniques namely Principal Component Analysis (PCA),
+Discrete Cosine Transform (DCT), Template Matching using
+Correlation (Corr) and Partitioned Iterative Function System
+(PIFS). We fuse the scores of all of these four techniques in a
+single face recognition system. We perform a comparative
+study of face recognition rate of this face recognition system at
+two precision levels namely at Top-5 and at Top-10 IDs. We
+experiment it with a standard ORL face database.
+Experimentally, we find that recognition rate by PCA-DCT
+technique is better than by individual PCA and DCT
+techniques and recognition rate by PCA-DCT-Corr technique
+is better than the PCA-DCT technique. Overall, we find the
+system based on combination of all of the four individual
+techniques outperforms.
+are those based on Principal Component Analysis (PCA),
+Template Matching using Correlation, Neural Network,
+Model Matching, Partitioned Iterated Function System
+(PIFS), Wavelet and Discrete Cosine Transform (DCT).
+For enhancing the accuracy and to increase the
+performance of the face recognition system a combination
+of these algorithms in a group of two or three individual
+techniques can be used. In this paper, we discuss the four
+different individual face recognition techniques based on
+PCA, DCT, Template Matching using Correlation, PIFS
+and also discuss recently developed different multi-
+algorithmic approaches for the face recognition systems
+based on the different combinations (in group of two or
+three) of these individual techniques [1], and we use the
+same multi-algorithmic approach for the face recognition
+systems based on the different combinations but in group
+of four of these individual techniques. The goal is to find
+which combination of these techniques performs better in
+terms of face recognition rate.
+This paper is organized as follows. In section 2, we
+discuss in brief the previous studies performed in the area of
+face recognition systems and in the corresponding
+subsection, we give an overview of the face database (ORL)
+used. In section 3, we discuss in brief the face recognition
+systems. In section 4, we show the multi-algorithmic
+approach for the face recognition systems based on the
+different in group of two and three combinations of
+individual techniques discussed in section 3. In section 5,
+we discuss the multi-algorithmic approach for the face
+recognition systems based on the different combinations in
+group of four individual techniques. In section 6, we analyse
+the results at top 5/10 IDs. Finally, we conclude and give
+some future directions.
+Keywords: Face Recognition system; Multi-algorithmic
+techniques: PCA-DCT, PCA-DCT-Corr; face database: ORL;
+Recognition Rate
+I.
+I NTRODUCTION
+Unique facial characteristics of human beings often
+recognize one another. In the face recognition approach, a
+given face is compared with the faces stored in a face
+database in order to identify the person. The purpose is to
+find a face in the database, which has the highest similarity
+with the given face. Most successful forms of the human
+surveillance are the Facial recognition. In the fields of
+biometric, facial recognition technology is one of the fastest
+growing fields. Several studies have been reported in the
+last 10 to 15 years given in [2], [3] and [4].
+With working together, efforts from the researchers in
+different fields including computer engineering,
+mathematics, psychophysics and neuroscience, different
+outlooks have evolved to solve the problem of face
+recognition [5]. Among these, the projecting approaches
+978-0-7695-4587-5/11 $26.00 © 2011 IEEE
+DOI 10.1109/CICN.2011.44
+II.
+R ELATED W ORK
+On the analysis of face recognition system some of the
+important studies on face recognition systems are discussed,
+PCA also known as Eigen face method, In PCA method the
+images are projected onto the facial value so called
+eigenspace [7] and [13]. PCA approach reduces the
+dimension of the data by means of basic data compression
+method [3] and reveals the most effective low dimensional
+structure of facial patterns [4]. LFA method of recognition
+is based on the analysis the face in terms of local features
+e.g. eye, nose etc. by what is referred LFA kernels.
+Recognition by Neural Network [10] and 14] are based on
+228
+222Another approach is the Template matching using
+correlation; it is the process of locating the position of a sub
+image inside a larger image. The sub image is called the
+template and the larger image is called the search area. The
+template matching process involves shifting the template
+over the search area and computing the similarity measure
+between the template and the window in the search area over
+which the template lies. The correlation between two signals
+(cross correlation) is a standard approach to feature detection
+[13] as well as a building block for more sophisticated
+recognition techniques. All images of natural or human made
+objects show region wise self similarity although they may
+not be globally self similar. Such images can be represented
+by Partitioned Iterative function System (PIFS) [19].
+learning of the faces in an ‘Example Set’ by the machine in
+the ‘Training Phase’ and carrying out recognition in the
+‘Generalization Phase’. Support Vector Machines (SVM)
+technique is in fact one of the binary classification methods.
+The support vectors consist of a small subset of training data
+extracted by the algorithm given in [11]. Face recognition
+based on template matching represents a face in terms of a
+template consisting of several enclosing masks the
+projecting features e.g. the mouth, the eyes and the nose
+[12]. In [15] a face detection method based on half face-
+template is discussed. Recognition technique formulated on
+Partitioned Iterated Function System (PIFS) [8] makes use
+of the fact that human face shows self-similarity region-
+wise, which is utilized for encoding the face to generate the
+PIFS code, by matching the PIFS codes recognition is
+performed. In [18] the face recognition system based on
+partitioned Iterated Function System is discussed, in which
+face recognition based on PIFS representation and matching
+is carried out in the domain of PIFS code. In [16] Bayesian
+approach to face recognition based on wavelet transform is
+discussed. In [17] illumination normalization is proposed by
+exploiting the correlation of discrete cosine transform
+(DCT) low-frequency coefficients to illumination variations.
+IV.
+A. Combinig two or three individual algorithms
+Different algorithms are employed to recognize a query
+face of the biometric face recognition systems, as pointed out
+in [9], fusing the scores of several techniques applied on the
+same data is a good approach to improve the overall
+accuracy of a biometric system [16]. For combining two
+individual techniques, we fused the scores of two individual
+techniques in order to increase the performance of the
+system. The first multi-algorithmic technique in combination
+of PCA and DCT individual techniques named PCA-DCT
+face recognition system [1]. In this system, first we extract
+the PCA feature vector and then extract DCT feature vector
+of the reference face database images. For combining three
+techniques, we fuse the scores of three individual techniques
+in order to increase the performance of the system. For
+implementing this type of multi-algorithmic approach, first
+we extract the PCA feature vector, DCT feature vector and
+Templates with Correlation of the reference face database
+images as discussed earlier. Reference face image database
+when subjected to PCA the PCA reference feature vector
+database is obtained and same for other individual
+algorithms. The second multi-algorithmic technique is the
+combinations of three individual algorithms named PCA-
+DCT-Corr face recognition system. In this system, first we
+extract the PCA feature vector, extract Corr feature vector
+and extract DCT feature vector of the reference face database
+images. To recognize a particular input query face, the
+system compares the face’s feature vector to the feature
+vector of the database faces using Euclidean Distance nearest
+neighbor classifier [6].
+ORL Face Database
+The ORL face database was originally published by
+Cambridge University. ORL database contains a set of faces
+taken between April 1992 and April 1994 at the Olivetti
+Research Laboratory in Cambridge, U.K. [20]. It consists of
+400 face images taken from 40 people, 10 images per person.
+For each person, it contains face images under different
+lighting conditions, facial expressions, and poses. All the
+images are against a dark homogeneous background with the
+subjects in an up-right, frontal position, with tolerance for
+some tilting and rotation of up to about 20 degrees. There are
+variations in images of different persons like persons have
+beard, persons have glasses, persons have moustaches etc.
+The images are grayscale with a resolution of 92 X 112
+pixels in bitmap file format.
+III.
+M ULTI A LGORITHMS OF F ACE R ECOGNITION S YSTEM
+F ACE R ECOGINITION S YSTEM
+Face Recognition System (FRS) is the computer
+application of recognizing similar faces from the images of
+face database. Four individual techniques of face recognition
+systems are: PCA, DCT, Template matching using
+Correlation and PIFS. To implementing each technique, we
+follow three steps that are: (1) Face preprocessing steps, (2)
+Feature vector extraction and (3) Recognition step. In
+preprocessing step, resizing of the images are performed
+because original images have more values by which
+eigenface computation becomes complex. In the feature
+vector extraction step: in case of PCA, find the eigenvectors
+with the highest eigenvalue. The Discrete Cosine Transform
+(DCT) converts an image from spatial domain to frequency
+domain [17], its DCT is computed and only a subset of the
+obtained coefficients is retained. In this work, 2D DCT has
+been used to extract feature vectors from face image.
+B. Combining four individual algorithms
+Fusing the scores of several techniques applied on the
+same data (face image) is a good approach to improve the
+overall accuracy of a biometric system as says in [16].
+Therefore, in this paper, we fuse all the four individual
+algorithms based on Principal Component Analysis (PCA),
+Discrete Cosine Transform (DCT), Template Matching using
+Correlation (Corr) and Partitioned Iterated Function System
+(PIFS) into single face recognition system. The schematic
+diagram of this system is shown in Figure 6. In this system,
+first we extract the PCA feature vector, extract PIFS feature
+223
+229vector, extract DCT feature vector and extract Template with
+correlation feature vector of the reference face database
+images. To implement this type of multi-algorithmic
+approach, first we extract the PCA feature vector, DCT
+feature vector, Templates and the PIFS code of the reference
+face database images as discussed in above paragraph.
+Reference face image database when subjected to PCA, PCA
+reference feature vector database is obtained. In Template
+Matching the templates of eyes, nose and mouth are created
+and stored as reference Template database.
+V.
+R ESULTS AND D ISCUSSION
+In this work on multi-algorithmic face recognition, we
+implemented a face recognition system by combining four
+individual techniques. We also compare the performance of
+this face recognition system with the performance of the
+combination of two and three individual techniques PCA-
+DCT and PCA-DCT-Corr. The experimental results are
+obtained on Olivetti Research Laboratory (ORL) face image
+database [21]. This ORL face database acts as the reference
+face database and contains 400 face images. There are 10
+face images each of 40 different persons. These systems are
+evaluated on the basis of recognition rate obtained at two
+levels, namely (i) at top 5-IDs and (ii) at top 10-IDs. Each
+image in the reference face image database is made as query.
+Results of top ten close matches of face ID= 234 and pose
+no. 24 of the three face recognition systems based on multi-
+algorithmic approaches: PCA-DCT, PCA-DCT-Corr and
+PCA-DCT-Corr-PIFS are shown in Figure 1, Figure 2, and
+Figure 3 respectively. In each of these figures the first image
+is the query image. Here, we have shown few results due to
+space limitation.
+Figure 2: PCA-DCT-Corr System: Top ten close matches: the first
+image is the query image
+Figure 3: PCA-DCT-Corr-PIFS System: Top ten close matches:
+the first image is the query image
+We have analyzed the results at two levels, at Top 5 IDs
+and at Top 10 IDs. Table 1 show the average face
+recognition rate at Top 5 IDs. We find that the PCA-DCT-
+Corr-PIFS based face recognition systems has highest
+recognition rate as compared to other four systems shown at
+this level, and graphically shown in Figure 4. Table 2 show
+the average face recognition rate at Top 10 IDs. We find
+that the PCA-DCT-Corr-PIFS based face recognition
+systems has highest recognition rate as compared to other
+four systems shown at this level, and graphically shown in
+Figure 5.
+Figure 1: PCA-DCT System: Top ten close matches: the first
+image is the query image
+Table 1: Recognition rate at top5-IDs of five recognition systems
+224
+230S. No. Face recognition
+Methods
+1
+2
+3
+4
+5 PCA
+DCT
+PCA-DCT
+PCA-DCT-Corr
+PCA-DCT-Corr-PIFS
+0.98
+0.96
+0.94
+0.92
+0.9
+0.88
+0.86
+VI.
+Recognition
+Rate (%)
+0.9056
+0.9324
+0.9424
+0.9610
+0.9712
+In this work, we reported the development of the multi-
+algorithmic face recognition systems based on four
+individual techniques namely PCA, DCT, Correlation and
+PIFS with the combination of all four individual algorithms.
+In the multi-algorithmic approach, we combine these four
+individual techniques in a pair of two, three and all to obtain
+combinations face recognition system namely PCA-DCT,
+PCA-DCT-Corr and PCA-DCT-Corr-PIFS. We performed
+our experiments with the standard ORL face database.
+Experimentally, we find that these combinations based
+systems provide better results than the corresponding
+individual algorithms, and combination of all four
+individual algorithm perform better than multi-algorithmic
+approaches in a combination of two and three individual
+techniques based system. Overall, we find the system based
+on combination of all of the four individual techniques
+outperforms. The obvious reason for this is that the some
+IDs are returned by first, second and third systems but not
+by the fourth system in the group of four individual system.
+When we combine these four techniques, these IDs got
+combined and the recognition rate in both the cases i.e. for
+the top5-IDs and for the top10-IDs increases. Average result
+of four combinations, the PCA-DCT-Corr-PIFS based
+system has the highest recognition rate in both the cases. In
+future we can implement other algorithms and may combine
+with these systems.
+PCA DCT PCA- PCA- PCA-
+DCT DCT- DCT-
+Corr Corr-
+PIFS
+Figure 4: Face Recognition rate of five systems at top 5-IDs
+Table 2: Recognition rate at top10-IDs of five recognition systems
+Face recognition
+Recognition
+S. No.
+Methods
+Rate (%)
+0.7184
+1
+PCA
+0.7420
+2
+DCT
+0.7750
+3
+PCA-DCT
+0.8540
+4
+PCA-DCT-Corr
+0.8680
+5
+PCA-DCT-Corr-PIFS
+R EFERENCES
+S. M. Zakariya, R. Ali and M. A. Lone, “Automatic Face Recognition
+Using Multi-Algorithmic Approaches”, S. Aluru et al. (Eds.): IC3
+2011, CCIS 168, pp. 501–512, 2011.
+[2] R.Gross, J. Shi and J. Cohn., “Quo vadis Face Recognition: Third
+Workshop on Empirical Evaluation Methods in Computer Vision”,
+Carnegie Mellon University, Pittsburgh, USA, December, 2001.
+[3] D. Blackburn, M. Bone, and P. Phillips, “Facial Recognition Vendor
+Test 2000: Evaluation Report”, publish in National Institute of
+Science and Technology, Gaithersburg, USA, 2000.
+[4] P. J. Phillips, H. Moon, S.Rizvi and P. Rauss, “FERET Evaluation
+Methodology for Face Recognition Algorithms”, IEEE transaction on
+pattern analysis and machine intelligence (PAMI 2000), Los
+Alamitos, USA, pp.1090-1103, 2000.
+[5] Soumitra Kar, Swati Hiremath, Dilip G. Joshi, Vinod.K.Chadda and
+Apurva Bajpai, “A Multi-Algorithmic Face Recognition System”,
+International Conference on
+Advanced Computing and
+Communications, pp. 321-326, 2006.
+[6] Z. M. Hafed and M. D. Levine, “Face Recognition Using the Discrete
+Cosine Transform”, International Journal of Computer Vision,
+vol.(43), no.3, pp.167–188, 2001.
+[7] Turk, M. and A. Pentland, “Eigenfaces for Recognition”, Journal of
+Cognitive Neuroscience, pp. 71-86, 1991.
+[8] S. Chandran and S. Kar, “Retrieving Faces by the PIFS Fractal
+Code”, Proceedings of the Sixth IEEE Workshop on Applications of
+Computer Vision (WACV 2002), Orld, Florida, pp. 8-12, Dec 2002.
+[9] A. Lemieux and M. Parizeau, “Flexible multi-classifier architecture
+for face recognition systems”, Vision Interface, pp. 1-8, 2003.
+[10] D. Bryliuk and V. Starovoitov, “Access Control by Face Recognition
+using Neural Networks and Negative Examples”, 2nd International
+Conference on Artificial Intelligence, Crimea, Ukraine, pp. 428-436,
+Sept. 2002.
+[1]
+0.88
+0.84
+0.8
+0.76
+0.72
+0.68
+C ONCLUSION
+PCA DCT PCA- PCA- PCA-
+DCT DCT- DCT-
+Corr Corr-
+PIFS
+Figure 5: Face Recognition rate of five systems at top 10-IDs
+225
+231[11] Huang, X. Shao, and H. Wechsler, “Face Pose Discrimination Using
+Support Vector Machines”, Technical report of George Mason
+University and University of Minnesota, Minneapolis Minnesota,
+United States 1998.
+[12] R. Brunelli and T. Poggio, “Face Recognition: Features versus
+Templates”, IEEE Transactions on Pattern Analysis and Machine
+Intelligence, vol. 15, no.10, pp. 1042-1052, Oct 1993.
+[13] Tat-Jun Chin and David Suter, “A Study of the Eigenface Approach
+for Face Recognition”, Technical Report of Monash University, Dept.
+Elect & Comp.Sys Eng (MECSE 2004) Australia, pp.1-18, 2004.
+[14] S. A. Nazeer, N. Omar, M. Khalid, “Face Recognition System using
+Artificial Neural Networks Approach”, IEEE International
+Conference on Signal Processing, Communications and Networking,
+pp.420 – 425, 2007.
+[15] Wei Chen, Tongfeng Sun, Xiaodong Yang, and Li Wang, “Face
+detection based on half face-template”, Proc. of the IEEE Conference
+on Electronic Measurement and Instrumentation, pp. 54-58, 2009.
+[16] Niu Liping, Zheng Yanbin, Dou Yuqiang, and Li XinYuan,
+“Combined Face Recognition Using Wavelet Transform and
+Bayesian”, Proc. of the IEEE International Conference on
+Information and Computing Science, pp.337-340, 2009.
+[17] Vishwakarma, V.P Pandey, S Gupta, “A Novel Approach for Face
+Recognition Using DCT Coefficients Re-scaling for Illumination
+Normalization”, Proc. of the IEEE International Conference on
+[18]
+[19]
+[20]
+[21]
+[22]
+Advanced Computing and Communications (ADCOM 2007), pp.
+535-539, 2007.
+Amol D. Potgantwar, S.G. Bhiruid, “Web Enabled based Face
+Recognition using Partiotioned Iterated Function System”,
+International Journal of Computer Applications, vol(1), no.2, pp.30-
+35, 2010.
+Ce Fan, “Matching Scheme based on PIFS of Compression for Image
+Retrieval”, Proc. of the IEEE International Conference on Robotics
+and Biomimetics, pp.2027-2031, Dec 2007.
+The
+Database
+of
+Faces,
+http://www.cl.cam.ac.uk./research/dtg/attarchive/ Facdatabase.ht
+ml.
+M. Bicego, U. Castellani & V. Murino; “Using Hidden Markov
+Models and Wavelet for face recognition”,
+http://profs.sci.univr.it/~bicego/iciap2003.pdf .
+D. L. Sirivich and M. Kirby, “Low-Dimensional Procedure for the
+Characterization of Human Faces”, Journal of the Optical Society of
+America A: Optics, Image Science, and Vision, America, pp.519-524,
+1987.
+Reference PCA
+Signature
+Apply
+PCA
+Extraction of
+PCA Signature
+Matching by
+(Euclidean
+Distance)
+Top5/Top10 IDs
+Reference DCT
+Signature
+Top5/Top10
+IDs
+Apply
+DCT
+Extraction of
+DCT
+Signature
+Matching by
+(Euclidean
+Distance)
+Normalize
+Matching
+Distance
+Between (0-1)
+Reference PIFS
+code
+Signature
+Resized
+Query image
+Top5/
+Top10 IDs
+Top5/Top10 IDs
+Apply
+PIFS
+Extraction of
+PIFS code
+Signature
+Matching by
+(Euclidean
+Distance)
+Reference
+Template
+Database
+Matching by
+(Correlation
+Coefficient)
+Top5/Top10 IDs
+1- corr. coff.
+Figure 6: Schematic block diagram of the PCA+DCT+PIFS+Corr Combination
+226
+232
+Rank and
+Take
+Union of
+ID s

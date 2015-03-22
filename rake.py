@@ -74,7 +74,7 @@ def build_stop_word_regex(stop_word_file_path):
     return stop_word_pattern
 
 
-def generate_candidate_keywords(sentence_list, stopword_pattern, min_char_length=1, max_words_length=5):
+def generate_candidate_keywords(sentence_list, stopword_pattern, min_char_length=1, max_words_length=3):
     phrase_list = []
     for s in sentence_list:
         tmp = re.sub(stopword_pattern, '|', s.strip())
@@ -138,7 +138,8 @@ def calculate_word_scores(phraseList):
         word_score.setdefault(item, 0)
         word_score[item] = word_degree[item] / (word_frequency[item] * 1.0)  #orig.
     #word_score[item] = word_frequency[item]/(word_degree[item] * 1.0) #exp.
-    return word_score
+    return word_frequency
+
 
 
 def generate_candidate_keyword_scores(phrase_list, word_score, min_keyword_frequency=1):
@@ -158,7 +159,7 @@ def generate_candidate_keyword_scores(phrase_list, word_score, min_keyword_frequ
 
 
 class Rake(object):
-    def __init__(self, stop_words_path, min_char_length=1, max_words_length=5, min_keyword_frequency=1):
+    def __init__(self, stop_words_path, min_char_length=1, max_words_length=3, min_keyword_frequency=1):
         self.__stop_words_path = stop_words_path
         self.__stop_words_pattern = build_stop_word_regex(stop_words_path)
         self.__min_char_length = min_char_length
@@ -175,6 +176,7 @@ class Rake(object):
         keyword_candidates = generate_candidate_keyword_scores(phrase_list, word_scores, self.__min_keyword_frequency)
 
         sorted_keywords = sorted(keyword_candidates.iteritems(), key=operator.itemgetter(1), reverse=True)
+
         return sorted_keywords
 
 
